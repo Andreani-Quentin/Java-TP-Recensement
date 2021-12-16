@@ -64,4 +64,16 @@ public class Ville {
     public void setPopulation(int population) {
         this.population = population;
     }
+
+    @Override
+    public String toString() {
+        return "Ville{" +
+                "codeRegion='" + codeRegion + '\'' +
+                ", nomRegion='" + nomRegion + '\'' +
+                ", codeDepartement='" + codeDepartement + '\'' +
+                ", codeCommune='" + codeCommune + '\'' +
+                ", nomCommune='" + nomCommune + '\'' +
+                ", population=" + population +
+                '}';
+    }
 }
