@@ -32,9 +32,9 @@ public class App {
         sc.useDelimiter("[;\n]");
 
         int i = 0;
-        while (sc.hasNext() && i < 10) {
+        while (sc.hasNext()) {
             codeRegion = sc.next();
-            nomRegion = sc.next();
+            nomRegion = sc.next().replaceAll("\\s+","-");
             codeDepartement = sc.next();
             codeArrondissement = sc.next();
             codeCanton = sc.next();
@@ -82,14 +82,47 @@ public class App {
                 String choixVille = obj1.nextLine();
 
                 for (Ville str : villes) {
-//                    System.out.println(str.getNomCommune());
-                    if (str.getNomCommune() == choixVille.trim()) {
-                        System.out.println(str.getPopulation());
+                    String commune = str.getNomCommune().trim();
+                    int population = str.getPopulation();
+                    if (commune.equals(choixVille) ) {
+                        System.out.println(population);
                     }
                 }
                 break;
             case 2:
+                Scanner obj2 = new Scanner(System.in);
+                System.out.println("Veuillez un numéro de département ici : ");
+                String choixDep = obj2.nextLine();
+
+                int populationDep = 0;
+
+                for (Ville str : villes) {
+                    String codeDep = str.getCodeDepartement();
+                    if (codeDep.equals(choixDep)) {
+                        int population = str.getPopulation();
+                        populationDep += population;
+                    }
+                }
+                System.out.println(populationDep);
+                break;
             case 3:
+                Scanner obj3 = new Scanner(System.in);
+                System.out.println("Les noms seront séparé par des - à la place des espaces ex :");
+                System.out.println("Pays-de-la-Loire");
+                System.out.println("Veuillez entrer nom région ici : ");
+                String choixReg = obj3.nextLine();
+
+                int populationReg = 0;
+
+                for (Ville str : villes) {
+                    String nomReg = str.getNomRegion().trim();
+                    if (nomReg.equals(choixReg)) {
+                        int population = str.getPopulation();
+                        populationReg += population;
+                    }
+                }
+                System.out.println(populationReg);
+                break;
             case 4:
             case 5:
             case 6:
