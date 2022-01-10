@@ -1,5 +1,6 @@
 package fr.epsi.b3.recensement;
 
+import fr.epsi.b3.recensement.entites.Region;
 import fr.epsi.b3.recensement.entites.Ville;
 
 import java.io.File;
@@ -124,6 +125,11 @@ public class App {
                 System.out.println(populationReg);
                 break;
             case 4:
+                // TODO Créer une class Région les instancier et les stocker dans une liste de class
+                // TODO Trier ensuite la liste en fonction de la population
+                ArrayList<Region> region = new ArrayList<>();
+
+                break;
             case 5:
             case 6:
             case 7:
