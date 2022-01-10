@@ -8,10 +8,6 @@ import java.io.File;
 import java.util.*;
 import java.io.FileNotFoundException;
 
-// TODO Récupérer les informations du CSV de manière à stocker dans un tableau et pouvoir boucler dessus ligne par ligne ==> Done
-// TODO Écrire un menu de cas particulier (Interactif dans le terminal)
-// TODO Créer un switch ou des fonctions pour chaque cas particularité demandé
-
 public class App {
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -131,7 +127,6 @@ public class App {
                 String nomRegVille = null;
                 String codeRegVille = null;
                 int popVille = 0;
-
 
                 for (Ville vil : villes) {
                     boolean check = false;
@@ -278,7 +273,7 @@ public class App {
 //                  System.out.println(maxValue);
 //                  System.out.println(dep10.keySet());
 //                }
-
+                break;
             case 7:
                 Scanner obj7 = new Scanner(System.in);
                 System.out.println("Les noms seront séparé par des - à la place des espaces ex :");
@@ -316,6 +311,7 @@ public class App {
                     }
                     x++;
                 }
+                break;
             case 8:
                 ArrayList<Integer> villePopList = new ArrayList<Integer>();
 
@@ -343,12 +339,9 @@ public class App {
                     }
                     x++;
                 }
+                break;
             case 9:
                 break;
         }
-
-//        for (Ville str : villes) {
-//            System.out.println(str.getCodeRegion());
-//        }
     }
 }
