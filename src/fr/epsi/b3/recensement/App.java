@@ -1,11 +1,11 @@
 package fr.epsi.b3.recensement;
 
+import fr.epsi.b3.recensement.entites.Departement;
 import fr.epsi.b3.recensement.entites.Region;
 import fr.epsi.b3.recensement.entites.Ville;
 
 import java.io.File;
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.*;
 import java.io.FileNotFoundException;
 
 // TODO Récupérer les informations du CSV de manière à stocker dans un tableau et pouvoir boucler dessus ligne par ligne ==> Done
@@ -125,16 +125,226 @@ public class App {
                 System.out.println(populationReg);
                 break;
             case 4:
-                // TODO Créer une class Région les instancier et les stocker dans une liste de class
-                // TODO Trier ensuite la liste en fonction de la population
                 ArrayList<Region> region = new ArrayList<>();
+                region.add(new Region("", "", 0));
+
+                String nomRegVille = null;
+                String codeRegVille = null;
+                int popVille = 0;
+
+
+                for (Ville vil : villes) {
+                    boolean check = false;
+                    for(Region reg : region) {
+                        String nomReg = vil.getNomRegion().trim();
+                        if (nomReg.equals(reg.getNomRegion().trim())){
+                            var pop = vil.getPopulation() + reg.getPopulation();
+                            reg.setPopulation(pop);
+                            check = true;
+                        }
+                    }
+                    if (!check) {
+                        nomRegVille = vil.getNomRegion();
+                        codeRegVille = vil.getCodeRegion();
+                        popVille = vil.getPopulation();
+
+                        region.add(new Region(nomRegVille, codeRegVille, popVille));
+                    }
+                }
+
+                ArrayList<Integer> regPopList = new ArrayList<Integer>();
+                for (Region reg : region) {
+                    regPopList.add(reg.getPopulation());
+                }
+                Collections.sort(regPopList);
+                Collections.reverse(regPopList);
+
+                System.out.println("");
+                System.out.println("**** Voici les 10 Région les plus peuplées de France ****");
+                System.out.println("");
+
+                var x = 0;
+                for (Integer pop : regPopList) {
+                    for (Region reg : region) {
+                        if (reg.getPopulation() == pop) {
+                            if (x < 10) {
+                                System.out.println(reg.getNomRegion());
+                                System.out.println("======> " + pop);
+                                System.out.println("");
+
+                            }
+                        }
+                    }
+                    x++;
+                }
 
                 break;
             case 5:
+                ArrayList<Departement> departement = new ArrayList<>();
+                departement.add(new Departement("", 0));
+
+                String codeDepVille = null;
+                popVille = 0;
+
+                for (Ville vil : villes) {
+                    boolean check = false;
+                    for(Departement dep : departement) {
+                        String codeDep = vil.getCodeDepartement().trim();
+                        if (codeDep.equals(dep.getCodeDepartement().trim())){
+                            var pop = vil.getPopulation() + dep.getPopulation();
+                            dep.setPopulation(pop);
+                            check = true;
+                        }
+                    }
+
+                    if (!check) {
+                        codeDepVille = vil.getCodeDepartement();
+                        popVille = vil.getPopulation();
+
+                        departement.add(new Departement(codeDepVille, popVille));
+                    }
+                }
+
+                ArrayList<Integer> depPopList = new ArrayList<Integer>();
+                for (Departement dep : departement) {
+                    depPopList.add(dep.getPopulation());
+                }
+                Collections.sort(depPopList);
+                Collections.reverse(depPopList);
+
+                System.out.println("");
+                System.out.println("**** Voici les 10 départements les plus peuplées de France ****");
+                System.out.println("");
+
+                x = 0;
+                for (Integer pop : depPopList) {
+                    for (Departement dep : departement) {
+                        if (dep.getPopulation() == pop) {
+                            if (x < 10) {
+                                System.out.println(dep.getCodeDepartement());
+                                System.out.println("======> " + pop);
+                                System.out.println("");
+
+                            }
+                        }
+                    }
+                    x++;
+                }
+                break;
             case 6:
+                Scanner obj6 = new Scanner(System.in);
+                System.out.println("Veuillez entrer un numéro de département ici : ");
+                String choixDep2 = obj6.nextLine();
+//                HashMap<String, Integer> dep10 = new HashMap<String, Integer>();
+                ArrayList<Integer> vilPopList = new ArrayList<Integer>();
+
+                for (Ville str : villes) {
+                    String codeDep = str.getCodeDepartement();
+                    if (codeDep.equals(choixDep2)) {
+                        int population = str.getPopulation();
+                        vilPopList.add(population);
+                    }
+                }
+                Collections.sort(vilPopList);
+                Collections.reverse(vilPopList);
+
+                System.out.println("");
+                System.out.println("**** Voici les 10 villes les plus peuplées de ce département ****");
+                System.out.println("");
+
+                x = 0;
+                for (Integer pop : vilPopList) {
+                    for (Ville vil : villes) {
+                        if (vil.getPopulation() == pop) {
+                            if (x < 10) {
+                                System.out.println(vil.getNomCommune());
+                                System.out.println("======> " + pop);
+                                System.out.println("");
+
+                            }
+                        }
+                    }
+                    x++;
+                }
+
+//                for (Ville str : villes) {
+//                    String codeDep = str.getCodeDepartement();
+//                    if (codeDep.equals(choixDep2)) {
+//                        int population = str.getPopulation();
+//                        String commune = str.getNomCommune().trim();
+//                        dep10.put(commune, population);
+//                    }
+//                  var maxValue = Collections.max(dep10.values());
+//                  System.out.println(maxValue);
+//                  System.out.println(dep10.keySet());
+//                }
+
             case 7:
+                Scanner obj7 = new Scanner(System.in);
+                System.out.println("Les noms seront séparé par des - à la place des espaces ex :");
+                System.out.println("Pays-de-la-Loire");
+                System.out.println("Veuillez entrer nom région ici : ");
+                String choixReg2 = obj7.nextLine();
+                ArrayList<Integer> vilPopRegList = new ArrayList<Integer>();
+
+                for (Ville str : villes) {
+                    String nomReg = str.getNomRegion().trim();
+                    if (nomReg.equals(choixReg2)) {
+                        int population = str.getPopulation();
+                        vilPopRegList.add(population);
+                    }
+                }
+
+                Collections.sort(vilPopRegList);
+                Collections.reverse(vilPopRegList);
+
+                System.out.println("");
+                System.out.println("**** Voici les 10 villes les plus peuplées de cette Région ****");
+                System.out.println("");
+
+                x = 0;
+                for (Integer pop : vilPopRegList) {
+                    for (Ville vil : villes) {
+                        if (vil.getPopulation() == pop) {
+                            if (x < 10) {
+                                System.out.println(vil.getNomCommune());
+                                System.out.println("======> " + pop);
+                                System.out.println("");
+
+                            }
+                        }
+                    }
+                    x++;
+                }
             case 8:
+                ArrayList<Integer> villePopList = new ArrayList<Integer>();
+
+                for (Ville vil : villes) {
+                    villePopList.add(vil.getPopulation());
+                }
+
+                Collections.sort(villePopList);
+                Collections.reverse(villePopList);
+
+                System.out.println("");
+                System.out.println("**** Voici les 10 villes les plus peuplées de France ****");
+                System.out.println("");
+
+                x = 0;
+                for (Integer pop : villePopList) {
+                    for (Ville vil : villes) {
+                        if (vil.getPopulation() == pop) {
+                            if (x < 10) {
+                                System.out.println(vil.getNomCommune());
+                                System.out.println("======> " + pop);
+                                System.out.println("");
+                            }
+                        }
+                    }
+                    x++;
+                }
             case 9:
+                break;
         }
 
 //        for (Ville str : villes) {
